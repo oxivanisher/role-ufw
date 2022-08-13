@@ -9,27 +9,27 @@
   community.general.ufw:
     logging: 'on'
 
-- name: "enable ssh login to port {{ ansible_port|string }} for public"
+- name: "enable ssh login to port {{ ansible_port | string }} for public"
   community.general.ufw:
     rule: allow
     port: "{{ ansible_port|string }}"
   when: ansible_port is defined
 
-- name: "allow tcp ports {{ ufw_public_allowed_tcp|join(', ') }} for public"
+- name: "allow tcp ports {{ ufw_public_allowed_tcp | join(', ') }} for public"
   community.general.ufw:
     rule: allow
     port: "{{ item|string }}"
     proto: tcp
   loop: "{{ ufw_public_allowed_tcp }}"
 
-- name: "allow udp ports {{ ufw_public_allowed_udp|join(', ') }} for public"
+- name: "allow udp ports {{ ufw_public_allowed_udp | join(', ') }} for public"
   community.general.ufw:
     rule: allow
     port: "{{ item|string }}"
     proto: udp
   loop: "{{ ufw_public_allowed_udp }}"
 
-- name: "allow tcp ports {{ ufw_mgmt_allowed_tcp|join(', ') }} for mgmt"
+- name: "allow tcp ports {{ ufw_mgmt_allowed_tcp | join(', ') }} for mgmt"
   community.general.ufw:
     rule: allow
     port: "{{ item|string }}"
@@ -38,7 +38,7 @@
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_tcp }}"
 
-- name: "allow udp ports {{ ufw_mgmt_allowed_udp|join(', ') }} for mgmt"
+- name: "allow udp ports {{ ufw_mgmt_allowed_udp | join(', ') }} for mgmt"
   community.general.ufw:
     rule: allow
     port: "{{ item|string }}"
