@@ -1,5 +1,4 @@
 ---
-
 ufw_public_allowed_tcp: []
 ufw_public_allowed_udp: []
 
