@@ -1,7 +1,9 @@
-Role Name
+ufw
 =========
 
-A brief description of the role goes here.
+Configure UFW firewall.
+
+This role only adds open ports. If you want to reset and only open the ports from this role, run `ufw reset` beforehand.
 
 Requirements
 ------------
