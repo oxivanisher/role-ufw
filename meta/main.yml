@@ -61,4 +61,4 @@ dependencies:
   # if you add dependencies to this list.
 
 collections:
-  - community.docker
+  - community.general
