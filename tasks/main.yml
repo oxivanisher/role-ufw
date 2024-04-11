@@ -3,16 +3,22 @@
   ansible.builtin.package:
     name: ufw
     state: present
+  become: true
+  become_user: root
 
 - name: Enable ufw logging
   community.general.ufw:
     logging: "on"
+  become: true
+  become_user: root
 
 - name: "Enable ssh login for public to port {{ ansible_port | string }}"
   community.general.ufw:
     rule: allow
     port: "{{ ansible_port | string }}"
   when: ansible_port is defined
+  become: true
+  become_user: root
 
 - name: "Allow tcp ports for public {{ ufw_public_allowed_tcp | join(', ') }}"
   community.general.ufw:
@@ -20,6 +26,8 @@
     port: "{{ item | string }}"
     proto: tcp
   loop: "{{ ufw_public_allowed_tcp }}"
+  become: true
+  become_user: root
 
 - name: "Allow udp ports for public {{ ufw_public_allowed_udp | join(', ') }}"
   community.general.ufw:
@@ -27,6 +35,8 @@
     port: "{{ item | string }}"
     proto: udp
   loop: "{{ ufw_public_allowed_udp }}"
+  become: true
+  become_user: root
 
 - name: "Allow tcp ports for mgmt {{ ufw_mgmt_allowed_tcp | join(', ') }}"
   community.general.ufw:
@@ -36,6 +46,8 @@
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_tcp }}"
+  become: true
+  become_user: root
 
 - name: "Allow udp ports for mgmt {{ ufw_mgmt_allowed_udp | join(', ') }}"
   community.general.ufw:
@@ -45,6 +57,8 @@
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_udp }}"
+  become: true
+  become_user: root
 
 - name: Enable ip forwarding
   ansible.builtin.lineinfile:
@@ -52,6 +66,8 @@
     regexp: "^DEFAULT_FORWARD_POLICY="
     line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
   when: ufw_forward_policy
+  become: true
+  become_user: root
 
 - name: Disable ip forwarding
   ansible.builtin.lineinfile:
@@ -59,6 +75,8 @@
     regexp: "^DEFAULT_FORWARD_POLICY="
     line: 'DEFAULT_FORWARD_POLICY="DROP"'
   when: not ufw_forward_policy
+  become: true
+  become_user: root
 
 # See https://github.com/chaifeng/ufw-docker#solving-ufw-and-docker-issues for more information
 # This is disabled, since its not really working as planned
@@ -98,3 +116,5 @@
   community.general.ufw:
     state: enabled
     default: deny
+  become: true
+  become_user: root
