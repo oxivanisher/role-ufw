@@ -1,24 +1,26 @@
 ufw
-=========
+===
 
 Configure UFW firewall.
 
-This role only adds open ports. If you want to reset and only open the ports from this role, run `ufw reset` beforehand.
+This role only opens TCP and UDP ports from public and a defined management network.
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Notes
+-----
+If you want to reset and only open the ports from this role, run `ufw reset` beforehand. Ensure that you are still able to talk to the system before running this!
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Name                   | Comment                                           | Default value |
+|------------------------|---------------------------------------------------|---------------|
+| ufw_public_allowed_tcp | List of TCP ports to be allowed from anywhere     | `[]`          |
+| ufw_public_allowed_udp | List of UDP ports to be allowed from anywhere     | `[]`          |
+| ufw_mgmt_allowed_tcp   | List of TCP ports to be allowed from mgmt network | `[]`          |
+| ufw_mgmt_allowed_udp   | List of UDP ports to be allowed from mgmt network | `[]`          |
+| ufw_mgmt_my_iprange    | The mgmt IP range the target server lives in      | ``            |
+| ufw_mgmt_src_iprange   | The mgmt IP range the connecting hosts live in    | ``            |
+| ufw_forward_policy     | Should IP forwarding be enabled?                  | `false`       |
 
 Example Playbook
 ----------------
@@ -27,7 +29,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - oxivanisher.linux_server.ufw
 
 License
 -------
@@ -37,4 +39,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role is part of the [oxivanisher.linux_server](https://galaxy.ansible.com/ui/repo/published/oxivanisher/linux_server/) collection, and the source for that is located on [github](https://github.com/oxivanisher/collection-linux_server).

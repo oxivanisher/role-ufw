@@ -5,7 +5,7 @@ ufw_public_allowed_udp: []
 ufw_mgmt_allowed_tcp: []
 ufw_mgmt_allowed_udp: []
 
-ufw_mgmt_my_iprange: []
-ufw_mgmt_src_iprange: []
+ufw_mgmt_my_iprange:
+ufw_mgmt_src_iprange:
 
 ufw_forward_policy: false

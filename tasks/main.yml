@@ -12,29 +12,14 @@
   become: true
   become_user: root
 
-- name: "Enable ssh login for public to port {{ ansible_port | string }}"
+- name: "Enable ssh login for mgmt to ansible port {{ ansible_port | string }}"
   community.general.ufw:
     rule: allow
     port: "{{ ansible_port | string }}"
-  when: ansible_port is defined
-  become: true
-  become_user: root
-
-- name: "Allow tcp ports for public {{ ufw_public_allowed_tcp | join(', ') }}"
-  community.general.ufw:
-    rule: allow
-    port: "{{ item | string }}"
     proto: tcp
-  loop: "{{ ufw_public_allowed_tcp }}"
-  become: true
-  become_user: root
-
-- name: "Allow udp ports for public {{ ufw_public_allowed_udp | join(', ') }}"
-  community.general.ufw:
-    rule: allow
-    port: "{{ item | string }}"
-    proto: udp
-  loop: "{{ ufw_public_allowed_udp }}"
+    src: "{{ ufw_mgmt_src_iprange }}"
+    dest: "{{ ufw_mgmt_my_iprange }}"
+  when: ansible_port is defined
   become: true
   become_user: root
 
@@ -57,6 +42,24 @@
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_udp }}"
+  become: true
+  become_user: root
+
+- name: "Allow tcp ports for public {{ ufw_public_allowed_tcp | join(', ') }}"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item | string }}"
+    proto: tcp
+  loop: "{{ ufw_public_allowed_tcp }}"
+  become: true
+  become_user: root
+
+- name: "Allow udp ports for public {{ ufw_public_allowed_udp | join(', ') }}"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item | string }}"
+    proto: udp
+  loop: "{{ ufw_public_allowed_udp }}"
   become: true
   become_user: root
 
