@@ -1,5 +1,6 @@
 ufw
 ===
+[![Ansible Lint](https://github.com/oxivanisher/role-ufw/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-ufw/actions/workflows/ansible-lint.yml)
 
 Configure UFW firewall.
 
