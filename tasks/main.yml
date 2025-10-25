@@ -9,6 +9,7 @@
 - name: Enable ufw logging
   community.general.ufw:
     logging: "on"
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -19,6 +20,7 @@
     proto: tcp
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_port is defined
   become: true
   become_user: root
@@ -31,6 +33,7 @@
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_tcp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -42,6 +45,7 @@
     src: "{{ ufw_mgmt_src_iprange }}"
     dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_udp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -51,6 +55,7 @@
     port: "{{ item | string }}"
     proto: tcp
   loop: "{{ ufw_public_allowed_tcp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -60,6 +65,7 @@
     port: "{{ item | string }}"
     proto: udp
   loop: "{{ ufw_public_allowed_udp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -69,6 +75,7 @@
     regexp: "^DEFAULT_FORWARD_POLICY="
     line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
   when: ufw_forward_policy | bool
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -78,6 +85,7 @@
     regexp: "^DEFAULT_FORWARD_POLICY="
     line: 'DEFAULT_FORWARD_POLICY="DROP"'
   when: not ufw_forward_policy | bool
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
 
@@ -119,5 +127,6 @@
   community.general.ufw:
     state: enabled
     default: deny
+  ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
