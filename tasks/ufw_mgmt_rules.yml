@@ -1,0 +1,36 @@
+---
+- name: "Enable ssh login for mgmt to ansible port {{ ansible_port | string }}"
+  community.general.ufw:
+    rule: allow
+    port: "{{ ansible_port | string }}"
+    proto: tcp
+    src: "{{ ufw_mgmt_src_iprange }}"
+    dest: "{{ mgmt_dest }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_port is defined
+  become: true
+  become_user: root
+
+- name: "Allow tcp ports for mgmt {{ ufw_mgmt_allowed_tcp | join(', ') }}"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item | string }}"
+    proto: tcp
+    src: "{{ ufw_mgmt_src_iprange }}"
+    dest: "{{ mgmt_dest }}"
+  loop: "{{ ufw_mgmt_allowed_tcp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
+
+- name: "Allow udp ports for mgmt {{ ufw_mgmt_allowed_udp | join(', ') }}"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item | string }}"
+    proto: udp
+    src: "{{ ufw_mgmt_src_iprange }}"
+    dest: "{{ mgmt_dest }}"
+  loop: "{{ ufw_mgmt_allowed_udp }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
