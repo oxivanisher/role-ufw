@@ -19,11 +19,11 @@ Role Variables
 | ufw_public_allowed_udp | List of UDP ports to be allowed from anywhere     | `[]`          |
 | ufw_mgmt_allowed_tcp   | List of TCP ports to be allowed from mgmt network | `[]`          |
 | ufw_mgmt_allowed_udp   | List of UDP ports to be allowed from mgmt network | `[]`          |
-| ufw_mgmt_my_iprange    | The mgmt IP ranges the target server lives in     | `[]`          |
-| ufw_mgmt_src_iprange   | The mgmt IP range the connecting hosts live in    | ``            |
+| ufw_mgmt_my_iprange    | The mgmt IP ranges the target server lives in     | ``            |
+| ufw_mgmt_src_iprange   | The mgmt IP range the connecting hosts live in    | `[]`          |
 | ufw_forward_policy     | Should IP forwarding be enabled?                  | `false`       |
 
-**Attention:** Please be aware, that `ufw_mgmt_my_iprange` sould be a list, even if you only have one management network.
+**Attention:** Please be aware, that `ufw_mgmt_src_iprange` sould be a list, even if you only have one management network.
 
 Example Playbook
 ----------------

@@ -4,8 +4,8 @@
     rule: allow
     port: "{{ ansible_port | string }}"
     proto: tcp
-    src: "{{ ufw_mgmt_src_iprange }}"
-    dest: "{{ mgmt_dest }}"
+    src: "{{ mgmt_src }}"
+    dest: "{{ ufw_mgmt_my_iprange }}"
   ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_port is defined
   become: true
@@ -16,8 +16,8 @@
     rule: allow
     port: "{{ item | string }}"
     proto: tcp
-    src: "{{ ufw_mgmt_src_iprange }}"
-    dest: "{{ mgmt_dest }}"
+    src: "{{ mgmt_src }}"
+    dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_tcp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
@@ -28,8 +28,8 @@
     rule: allow
     port: "{{ item | string }}"
     proto: udp
-    src: "{{ ufw_mgmt_src_iprange }}"
-    dest: "{{ mgmt_dest }}"
+    src: "{{ mgmt_src }}"
+    dest: "{{ ufw_mgmt_my_iprange }}"
   loop: "{{ ufw_mgmt_allowed_udp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
