@@ -15,7 +15,7 @@
 
 - name: "Apply mgmt ufw rules for {{ mgmt_dest }}"
   ansible.builtin.include_tasks: ufw_mgmt_rules.yml
-  loop: "{{ ufw_mgmt_my_iprange }}"
+  loop: "{{ [ufw_mgmt_my_iprange] if ufw_mgmt_my_iprange is string else ufw_mgmt_my_iprange }}"
   loop_control:
     loop_var: mgmt_dest
 
