@@ -23,7 +23,7 @@ Role Variables
 | ufw_mgmt_src_iprange   | The mgmt IP range the connecting hosts live in    | ``            |
 | ufw_forward_policy     | Should IP forwarding be enabled?                  | `false`       |
 
-**Attention:** Please be aware, that `ufw_mgmt_my_iprange` needs to be a list, even if you only have one management network.
+**Attention:** Please be aware, that `ufw_mgmt_my_iprange` sould be a list, even if you only have one management network.
 
 Example Playbook
 ----------------
