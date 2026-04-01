@@ -4,14 +4,12 @@
     name: ufw
     state: present
   become: true
-  become_user: root
 
 - name: Enable ufw logging
   community.general.ufw:
     logging: "on"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: Apply mgmt ufw rules for management networks
   ansible.builtin.include_tasks: ufw_mgmt_rules.yml
@@ -27,7 +25,6 @@
   loop: "{{ ufw_public_allowed_tcp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: "Allow udp ports for public {{ ufw_public_allowed_udp | join(', ') }}"
   community.general.ufw:
@@ -37,7 +34,6 @@
   loop: "{{ ufw_public_allowed_udp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: Enable ip forwarding
   ansible.builtin.lineinfile:
@@ -47,7 +43,6 @@
   when: ufw_forward_policy | bool
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: Disable ip forwarding
   ansible.builtin.lineinfile:
@@ -57,7 +52,6 @@
   when: not ufw_forward_policy | bool
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 # See https://github.com/chaifeng/ufw-docker#solving-ufw-and-docker-issues for more information
 # This is disabled, since its not really working as planned
@@ -99,4 +93,3 @@
     default: deny
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root

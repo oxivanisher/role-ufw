@@ -9,7 +9,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_port is defined
   become: true
-  become_user: root
 
 - name: "Allow tcp ports for mgmt {{ ufw_mgmt_allowed_tcp | join(', ') }}"
   community.general.ufw:
@@ -21,7 +20,6 @@
   loop: "{{ ufw_mgmt_allowed_tcp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: "Allow udp ports for mgmt {{ ufw_mgmt_allowed_udp | join(', ') }}"
   community.general.ufw:
@@ -33,4 +31,3 @@
   loop: "{{ ufw_mgmt_allowed_udp }}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
